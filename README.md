@@ -70,3 +70,84 @@
 8. 过程替换
 
    >  `cat <(ls) <(ls ..)`先把ls这个目录中的输出放到临时比文件内，再对父目录如法炮制，然后把两个文件连接
+   >
+   
+9. ```sh
+   echo "Starting program at $(date)" # Date will be substituted
+   
+   echo "Running program $0 with $# arguments with pid $$"
+   
+   for file in "$@"; do
+       grep foobar "$file" > /dev/null 2> /dev/null
+       # When pattern is not found, grep has exit status 1
+       # We redirect STDOUT and STDERR to a null register since we do not care about them
+       # 2> means the STDERR
+       # -ne mean no equal
+       if [[ $? -ne 0 ]]; then
+           echo "File $file does not have any foobar, adding one"
+           echo "# foobar" >> "$file"
+       fi
+   done
+   ```
+
+10. `ls *.sh`通配，能够搜索出所有含有任意字符，且以.sh为后缀的东西
+
+11. `ls project?`  ?只会展开一个字符
+
+12. 花括号的应用`convert image.png image.jpg` or `convert image.{png,jpg}`笛卡尔积
+
+13. `touch {foo,bar}/{a..j}`
+
+14. >  `touch foo/x bar/y`
+    >
+    > `diff <(ls foo) <(ls bar)`
+
+15. python与shell进行交互
+
+    > python script.py a b c
+    >
+    > ./scipt.py a b c
+    
+16. `shell check mcd.sh` 能给出warning以及语法错误
+
+17. `tldr convert` or `tldr ffmpeg`能够获得关于如何调用命令的命令示例
+
+18. 查找文件
+
+    > `find  . -name src -type d`在当前目录递归查找文件
+    >
+    > `find . -path '**/test/*.py' -type f`这里的**可以匹配零个或多个目录名
+    >
+    > `find . -mtime -1`查找被修改过的文件，这里表示的是在最近一天被修改的东西
+    >
+    > `find . -name "*.tmp" -exec rm {} \`把所有tmp后缀的文件删除掉
+    
+19. `fd ".*py"`
+
+20. `locate`查找文件系统中具有指定子串的路径，可以用过`updatedb`进行数据库的更新。
+
+21. `grep -R foobar .`可以通过递归的方式找遍整个目录。
+
+22. `rg "import requests" -t py ~/scratch`查找用了request库的python 代码
+
+23. `rg "import requests" -t py -C 5 ~/scratch`查找用了request库的python 代码并显示上下5行
+
+23. `ripgrep`
+
+24. `rg -u --files-without-match "^#\!" -t sh`   `-u`是不忽略隐藏文件，`--files-without-match`打印出不匹配整个模式的内容,`"^#\!"`的意思是匹配行首由`#!`的内容，`-t sh`表示只搜索.sh的文件 
+
+25. `rg "import requests" -t py -C 5 --stats ~/scratch` 中的`--stats`可以输出统计结果
+
+26. 如何找到已经执行过的命令？
+
+    > 1. 上箭头
+    > 2. `history`
+    > 3. `history 1 | grep convert`打印出历史记录中有convert的命令
+    > 4. `Ctrl+R`按执行时间倒序搜索
+    > 5. `fzf`模糊搜索工具，一个交互式的grep。`cat example.sh | fzf`通过管道连到`fzf`上。之后就可以实时的搜索。如果打开默认绑定，它会绑定到shell的`Ctrl+R`执行上，就可以动态的查看。
+    > 6. fish 和 zsh
+
+27. 快速搜索目录命令
+
+    > `ls -R`递归列出目录结构,`tree`，`broot `, `nnn`
+
