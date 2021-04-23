@@ -18,3 +18,20 @@
 13. `cat brightness`
 14. `echo 1 | sudo tee brightness`
 15. `xdg-open` in Linux or `open` in MacOS 给出一个文件名，然后这个命令就会用合适的程序打开它。
+## Lecture 2
+1. 
+  > `foo=bar` 这里不要有空格，否则会无法生效
+  > `echo $foo` 
+2. 两种方法在shell中定义字符串
+  > 用双引号：`echo "Hello"`
+  > 用单引号：`echo 'World'`
+  > `echo "Value is $foo"` 输出的是`Value is bar` 替换掉shell中foo变量的值
+  > 如果用的是单引号`echo 'Value is $foo'`输出的是`Value is $foo`，单引号中的变量不会被替换
+3. 定义函数
+  > `vim mcd.sh`
+    > ```
+    > mcd(){
+    >   mkdir -p "$1"
+    >   cd "$1"
+    > }
+    > ```
