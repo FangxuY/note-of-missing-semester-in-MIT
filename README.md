@@ -145,9 +145,26 @@
     > 3. `history 1 | grep convert`打印出历史记录中有convert的命令
     > 4. `Ctrl+R`按执行时间倒序搜索
     > 5. `fzf`模糊搜索工具，一个交互式的grep。`cat example.sh | fzf`通过管道连到`fzf`上。之后就可以实时的搜索。如果打开默认绑定，它会绑定到shell的`Ctrl+R`执行上，就可以动态的查看。
-    > 6. fish 和 zsh
+    > 6. `fish` 和 `zsh`
 
 27. 快速搜索目录命令
 
     > `ls -R`递归列出目录结构,`tree`，`broot `, `nnn`
 
+## Lecture 3 Vim
+
+Vim是基于模式（Modal）的编辑器。 **normal** 模式进入**insert**模式通过输入`i`进入，而**insert**模式进入**normal**模式通过`Esc`进入。**normal**模式用来移动光标，阅读东西以及文件间切换，**insert**模式则用来输入。还有**replace**模式，不会像插入模式会把字符往后移。**selection**模式，**visual** 模式(-line,-block)，从normal模式出发
+
+> 按`i`进入insert模式 
+>
+> 按`R`进入replace模式
+>
+> 按`v`进入visual模式
+>
+> 按`shift-v`进入visual -line模式
+>
+> 按`Ctrl-V`进入visual-block模式
+>
+> 按`:`进入command-line模式
+>
+> 
