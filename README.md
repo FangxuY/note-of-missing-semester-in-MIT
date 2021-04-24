@@ -175,4 +175,162 @@ Vim是基于模式（Modal）的编辑器。 **normal** 模式进入**insert**�
 7. 移动光标：
 
 > 1. vim的接口本身就是一个编程语言，不同的按键组合具有不同的效果，在Vim中用hjkl键，h左移，j下移，k上移，l右移
+>
 > 2. `w`和`b`键用来一个一个单词的移动
+>
+> 3. 按行移动: `0` (beginning of line), `^` (first non-blank character), `$` (end of line)
+>
+> 4. 按屏幕移动: `H` (top of screen), `M` (middle of screen), `L` (bottom of screen)
+>
+> 5. 滚动: `Ctrl-u` (up), `Ctrl-d` (down)
+>
+> 6. 按文件移动: `gg` (beginning of file), `G` (end of file)
+>
+> 7. 按照行数移动: `:{number}<CR>` or `{number}G` (line {number})
+>
+> 8. Misc: `%` (corresponding item)
+>
+> 9. Find:
+>
+>    ```plaintext
+>    f{character}
+>    ```
+>
+>    ```plaintext
+>t{character}
+>    ```
+>    
+>    ```plaintext
+>F{character}
+>    ```
+>
+>    ```plaintext
+>    T{character}
+>    ```
+>
+>    - find/to forward/backward {character} on the current line
+>- `,` / `;` for navigating matches
+>    
+> 10. Search: `/{regex}`, `n` / `N` for navigating matches
+
+8. 编辑
+
+   >  ```plaintext
+   >  i
+   >  ```
+   >
+   >  enter Insert mode
+   >
+   >  `o` / `O` insert line below / above
+   >
+   >  ```plaintext
+   >  	d{motion}
+   >  ```
+   >  delete {motion}
+   >
+   >  - e.g. `dw` is delete word, `d$` is delete to end of line, `d0` is delete to beginning of line
+   >
+   >  ```plaintext
+   >  	c{motion}
+   >  ```
+   >  change {motion}
+   >  - e.g. `cw` is change word  
+   >  
+   > like `d{motion}` followed by `i`
+   > `x` delete character (equal do `dl`)
+   > `s` substitute character (equal to `xi`)
+   > select text, `d` to delete it or `c` to change it
+   > `u` to undo, `<C-r>` to redo
+   >  `y` to copy / “yank” (some other commands like `d` also copy)
+   >  `p` to paste
+   >   Lots more to learn: e.g. `~` flips the case of a character
+   > Visual mode + manipulation
+
+9. 计数
+
+   >  You can combine nouns and verbs with a count, which will perform a given action a number of times.
+   >
+   > - `3w` move 3 words forward
+   > - `5j` move 5 lines down
+   > - `7dw` delete 7 words
+
+10. 修饰符
+
+    > You can use modifiers to change the meaning of a noun. Some modifiers are `i`, which means “inner” or “inside”, and `a`, which means “around”.
+    >
+    > - 可以通过`%`在已经配对的括号间反复横跳
+    > - 可以通过`/range`快速查找range
+    >
+    > - `ci(` change the contents inside the current pair of parentheses
+    > - `ci[` change the contents inside the current pair of square brackets
+    > - `da'` delete a single-quoted string, including the surrounding single quotes
+
+11. 在Vim中，`.`会重复之前的编辑命令
+
+12.  可以通过硬盘上的`.vimrc`文件配置Vim
+
+13. Search and replace
+
+    `:s` (substitute) command ([documentation](http://vim.wikia.com/wiki/Search_and_replace)).
+
+    - ```plaintext
+      %s/foo/bar/g
+      ```
+
+      - replace foo with bar globally in file
+
+    - ```plaintext
+      %s/\[.*\](\(.*\))/\1/g
+      ```
+
+      - replace named Markdown links with plain URLs
+
+14. Multiple windows
+
+    - `:sp` / `:vsp` to split windows
+    - Can have multiple views of the same buffer.
+
+15. Macros宏指令
+
+    - `q{character}` to start recording a macro in register `{character}`
+
+    - `q` to stop recording
+
+    - `@{character}` replays the macro
+
+    - Macro execution stops on error
+
+    - `{number}@{character}` executes a macro {number} times
+
+    - Macros can be recursive
+
+      - first clear the macro with `q{character}q`
+      - record the macro, with `@{character}` to invoke the macro recursively (will be a no-op until recording is complete)
+
+    - Example: convert xml to json (file)
+      - Array of objects with keys “name” / “email”
+      - Use a Python program?
+      - Use sed / regexes
+        - `g/people/d`
+        - `%s/<person>/{/g`
+        - `%s/<name>\(.*\)<\/name>/"name": "\1",/g`
+        - …
+      - Vim commands / macros
+        - `Gdd`, `ggdd` delete first and last lines
+        - Macro to format a single element (register
+          ```plaintext
+          e
+          ```
+          )
+          - Go to line with `<name>`
+          - `qe^r"f>s": "<ESC>f<C"<ESC>q`
+        - Macro to format a person
+          - Go to line with `<person>`
+          - `qpS{<ESC>j@eA,<ESC>j@ejS},<ESC>q`
+        - Macro to format a person and go to the next person
+          - Go to line with `<person>`
+          - `qq@pjq`
+        - Execute macro until end of file
+          
+          - `999@q`
+        - Manually remove last `,` and add `[` and `]` delimiters
