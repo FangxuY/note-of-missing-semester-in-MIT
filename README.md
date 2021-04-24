@@ -70,7 +70,6 @@
 8. 过程替换
 
    >  `cat <(ls) <(ls ..)`先把ls这个目录中的输出放到临时比文件内，再对父目录如法炮制，然后把两个文件连接
-   >
    
 9. ```sh
    echo "Starting program at $(date)" # Date will be substituted
@@ -153,7 +152,7 @@
 
 ## Lecture 3 Vim
 
-Vim是基于模式（Modal）的编辑器。 **normal** 模式进入**insert**模式通过输入`i`进入，而**insert**模式进入**normal**模式通过`Esc`进入。**normal**模式用来移动光标，阅读东西以及文件间切换，**insert**模式则用来输入。还有**replace**模式，不会像插入模式会把字符往后移。**selection**模式，**visual** 模式(-line,-block)，从normal模式出发
+Vim是基于模式（Modal）的编辑器。 **normal** 模式进入**insert**模式通过输入`i`进入，而**insert**模式进入**normal**模式通过`Esc`进入。**normal**模式用来移动光标，阅读东西以及文件间切换，**insert**模式则用来输入。还有**replace**模式，不会像插入模式会把字符往后移。**selection**模式，**visual** 模式(-line,-block)，从**normal**模式出发
 
 > 按`i`进入insert模式 
 >
@@ -166,5 +165,14 @@ Vim是基于模式（Modal）的编辑器。 **normal** 模式进入**insert**�
 > 按`Ctrl-V`进入visual-block模式
 >
 > 按`:`进入command-line模式
->
-> 
+
+1. 保存文件，进入**command-line**模式输入`w`
+2. 退出文件，进入**command-line**模式输入`q`
+3. `:wq`保存并退出
+4. `:e{name of file}`打开文件并编辑
+5. 可以通过`:sp`来创建两个不同的窗口，打开的是同一个文件，通过`:sp`打开多个窗口后，就可以通过`:q`退出一个页面，也可以通过`:qa`退出所有的页面
+6. 可用`：newtab`来新建立一个窗口
+7. 移动光标：
+
+> 1. vim的接口本身就是一个编程语言，不同的按键组合具有不同的效果，在Vim中用hjkl键，h左移，j下移，k上移，l右移
+> 2. `w`和`b`键用来一个一个单词的移动
