@@ -1,4 +1,4 @@
-# Notes for missing semester in MIT
+# Notes of missing semester in MIT
 ## Lecture 1
 1. `date`
 2. `echo hello`
